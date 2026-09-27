@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Donia 💌</title>
+
+<style>
+
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   PAGE
+======================================== */
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(110, 80, 210, .08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(170, 100, 220, .08),
+            transparent 35%
+        ),
+        #f5f3f1;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    perspective: 1200px;
+
+    overflow: hidden;
+}
+
+
+/* ========================================
+   SCENE
+======================================== */
+
+.scene {
+
+    width: min(720px, 92vw);
+
+    aspect-ratio: 8 / 5;
+
+    perspective: 1200px;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.card {
+
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform .95s cubic-bezier(.35,.1,.25,1);
+
+}
+
+
+/* FLIPPED */
+
+.scene.flipped .card {
+
+    transform: rotateY(180deg);
+
+}
+
+
+/* ========================================
+   BOTH FACES
+======================================== */
+
+.face {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, .18);
+
+}
+
+
+/* ========================================
+   FRONT
+======================================== */
+
+.front {
+
+    background:
+        radial-gradient(
+            120% 120% at 20% 10%,
+            #6d4fd0,
+            #3b2a86 45%,
+            #241a5e
+        );
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 25px 35px;
+
+    text-align: center;
+
+}
+
+
+/* subtle dots */
+
+.front::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
+        );
+
+    background-size: 24px 24px;
+
+    pointer-events: none;
+
+}
+
+
+/* ========================================
+   FRONT TOP
+======================================== */
+
+.front .top {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: clamp(10px, 1.5vw, 17px);
+
+    letter-spacing: 3px;
+
+    opacity: .82;
+
+}
+
+
+/* ========================================
+   FRONT CENTER
+======================================== */
+
+.front .mid {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 1;
+
+}
+
+
+/* envelope */
+
+.front .mid > :first-child {
+
+    font-size: clamp(50px, 7vw, 80px);
+
+    margin-bottom: 18px;
+
+    filter:
+        drop-shadow(0 8px 10px rgba(0,0,0,.2));
+
+}
+
+
+/* title */
+
+.front h1 {
+
+    font-size: clamp(35px, 5vw, 58px);
+
+    letter-spacing: -1.5px;
+
+    margin: 0;
+
+}
+
+
+/* subtitle */
+
+.front .mid p {
+
+    margin-top: 12px;
+
+    font-size: clamp(17px, 2.5vw, 28px);
+
+    color: rgba(255,255,255,.72);
+
+}
+
+
+/* ========================================
+   FRONT HINT
+======================================== */
+
+.front .hint {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: clamp(9px, 1.3vw, 15px);
+
+    letter-spacing: 3px;
+
+    opacity: .7;
+
+}
+
+
+/* ========================================
+   BACK
+======================================== */
+
+.back {
+
+    transform: rotateY(180deg);
+
+    background-color: #fdfaf1;
+
+    background-image:
+        radial-gradient(
+            rgba(170,155,100,.38) 1px,
+            transparent 1px
+        );
+
+    background-size: 22px 22px;
+
+    color: #4a4231;
+
+    padding: 20px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    box-shadow:
+        inset 0 0 0 5px #fdfaf1,
+        inset 0 0 0 6px #d8d0b4,
+        0 15px 40px rgba(0,0,0,.18);
+
+}
+
+
+/* ========================================
+   POSTCARD HEADER
+======================================== */
+
+.back .head {
+
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    font-size: clamp(8px, 1.2vw, 13px);
+
+    letter-spacing: 2px;
+
+    color: #8a7f5c;
+
+    border-bottom: 1px solid #d8d0b4;
+
+    padding-bottom: 7px;
+
+}
+
+
+/* ========================================
+   STAMP
+======================================== */
+
+.stamp {
+
+    width: 60px;
+
+    height: 67px;
+
+    flex-shrink: 0;
+
+    margin-top: -8px;
+
+    border: 1px dashed #b9ad82;
+
+    background: rgba(255,253,246,.92);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 27px;
+
+    transform: rotate(3deg);
+
+}
+
+.stamp span {
+
+    font-size: 7px;
+
+    letter-spacing: .5px;
+
+    margin-top: 2px;
+
+}
+
+
+/* ========================================
+   POSTCARD BODY
+======================================== */
+
+.back .body {
+
+    flex: 1;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(125px, .8fr);
+
+    gap: 16px;
+
+    padding-top: 13px;
+
+}
+
+
+/* ========================================
+   MESSAGE
+======================================== */
+
+.msg {
+
+    min-width: 0;
+
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(11px, 1.45vw, 16px);
+
+    line-height: 1.42;
+
+    color: #4a4231;
+
+    overflow: hidden;
+
+    word-wrap: break-word;
+
+}
+
+
+/* ========================================
+   SIGNATURE
+======================================== */
+
+.msg .sig {
+
+    display: block;
+
+    text-align: right;
+
+    margin-top: 7px;
+
+    font-family:
+        "Brush Script MT",
+        cursive;
+
+    font-size: clamp(17px, 2vw, 24px);
+
+    font-style: italic;
+
+    color: #514632;
+
+}
+
+
+/* ========================================
+   RIGHT SIDE
+======================================== */
+
+.addr {
+
+    width: auto;
+
+    min-width: 0;
+
+    border-left: 1px solid #d8d0b4;
+
+    padding-left: 13px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding-bottom: 5px;
+
+}
+
+
+/* ========================================
+   ADDRESS
+======================================== */
+
+.addr b {
+
+    font-size: clamp(12px, 1.6vw, 17px);
+
+    line-height: 1.2;
+
+    color: #4a2d1e;
+
+    border-bottom: 1px solid #cfc7a8;
+
+    padding-bottom: 6px;
+
+}
+
+
+.addr i {
+
+    font-size: clamp(8px, 1.1vw, 12px);
+
+    line-height: 1.25;
+
+    font-style: normal;
+
+    color: #9a8f6c;
+
+    border-bottom: 1px solid #cfc7a8;
+
+    padding-bottom: 5px;
+
+    word-break: break-word;
+
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.back .foot {
+
+    height: 22px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    font-size: clamp(6px, .9vw, 9px);
+
+    letter-spacing: 1.5px;
+
+    color: #a69b7b;
+
+    border: 0;
+
+    border-top: 1px dashed #d8d0b4;
+
+    padding-top: 6px;
+
+}
+
+
+/* ========================================
+   HOVER
+======================================== */
+
+@media (hover: hover) {
+
+    .scene:hover .card {
+
+        filter:
+            brightness(1.03)
+            drop-shadow(0 20px 45px rgba(50,30,100,.22));
+
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .scene {
+
+        width: 92vw;
+
+        aspect-ratio: 8 / 5;
+
+    }
+
+
+    .face {
+
+        border-radius: 20px;
+
+    }
+
+
+    .front {
+
+        padding: 18px 20px;
+
+    }
+
+
+    .front .top {
+
+        font-size: 7px;
+
+        letter-spacing: 1.5px;
+
+    }
+
+
+    .front .mid > :first-child {
+
+        font-size: 48px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .front h1 {
+
+        font-size: 32px;
+
+    }
+
+
+    .front .mid p {
+
+        font-size: 16px;
+
+        margin-top: 7px;
+
+    }
+
+
+    .front .hint {
+
+        font-size: 7px;
+
+        letter-spacing: 1.5px;
+
+    }
+
+
+    .back {
+
+        padding: 13px 15px;
+
+    }
+
+
+    .back .head {
+
+        height: 39px;
+
+        font-size: 6px;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .stamp {
+
+        width: 43px;
+
+        height: 48px;
+
+        font-size: 18px;
+
+    }
+
+
+    .stamp span {
+
+        font-size: 5px;
+
+    }
+
+
+    .back .body {
+
+        grid-template-columns:
+            minmax(0, 1.8fr)
+            minmax(75px, .8fr);
+
+        gap: 9px;
+
+        padding-top: 8px;
+
+    }
+
+
+    .msg {
+
+        font-size: 8px;
+
+        line-height: 1.32;
+
+    }
+
+
+    .msg .sig {
+
+        font-size: 15px;
+
+        margin-top: 3px;
+
+    }
+
+
+    .addr {
+
+        padding-left: 8px;
+
+        gap: 5px;
+
+    }
+
+
+    .addr b {
+
+        font-size: 9px;
+
+        padding-bottom: 3px;
+
+    }
+
+
+    .addr i {
+
+        font-size: 6px;
+
+        padding-bottom: 3px;
+
+    }
+
+
+    .back .foot {
+
+        height: 15px;
+
+        font-size: 5px;
+
+        letter-spacing: .8px;
+
+        padding-top: 4px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="scene" id="scene">
+
+    <div class="card">
+
+
+        <!-- =================================
+             FRONT
+        ================================= -->
+
+        <div class="face front">
+
+
+            <div class="top">
+
+                <span>
+                    OMAR / DONIA POSTAL
+                </span>
+
+                <span>
+                    SPECIAL DELIVERY
+                </span>
+
+            </div>
+
+
+            <div class="mid">
+
+                <div>
+                    💌
+                </div>
+
+                <h1>
+                    For Donia
+                </h1>
+
+                <p>
+                    Midnight Magic
+                </p>
+
+            </div>
+
+
+            <div class="hint">
+
+                TAP TO OPEN & READ ⤴
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             BACK / POSTCARD
+        ================================= -->
+
+        <div class="face back">
+
+
+            <!-- HEADER -->
+
+            <div class="head">
+
+                <span>
+                    ● POST CARD · CARTE POSTALE
+                </span>
+
+                <div class="stamp">
+
+                    🍀
+
+                    <span>
+                        PAR AVION
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BODY -->
+
+            <div class="body">
+
+
+                <!-- MESSAGE -->
+
+                <p class="msg">
+
+                    To my absolute favorite human thank u
+                    for being the person I can talk with
+                    about everything.<br><br>
+
+                    Life is 100x better with u in it!<br>
+
+                    Keep going partner wish u all the best
+                    w sa7a wl 3afya w nchlh bl nje7 w nchlh
+                    rabi y3tik el 9owa bch tkml ts3a w tousl
+                    l7lmtk.<br><br>
+
+                    (sorry 3la retard 5atr wlh tchadit barcha
+                    mn dar w mn jedeya lmridha)
+
+                    <span class="sig">
+                        — Omar
+                    </span>
+
+                </p>
+
+
+
+                <!-- ADDRESS -->
+
+                <div class="addr">
+
+                    <b>
+                        To: Donia
+                    </b>
+
+                    <i>
+                        Omar Express
+                    </i>
+
+                    <i>
+                        Air Omar Express
+                    </i>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="foot">
+
+                <span>
+                    OMAR/DONIA -POSTCARD
+                </span>
+
+                <span>
+                    TAP TO FLIP ⤴
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const scene = document.getElementById("scene");
+
+scene.addEventListener("click", () => {
+
+    scene.classList.toggle("flipped");
+
+});
+
+</script>
+
+
+</body>
+</html>
